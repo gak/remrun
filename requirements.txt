@@ -4,6 +4,7 @@
 #
 #    pip-compile requirements.in
 #
+-e git+https://github.com/carljm/django-model-utils.git@8fb1e569756641fc773dcfd11b7963087ee5b685#egg=django-model-utils
 amqp==1.4.7               # via kombu
 anyjson==0.3.3            # via kombu
 billiard==3.3.0.21        # via celery

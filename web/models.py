@@ -1,5 +1,6 @@
 import shortuuid
 from django.db.models import Model, CharField
+from model_utils.managers import InheritanceManager
 
 
 def new_shortuuid():
@@ -7,10 +8,12 @@ def new_shortuuid():
 
 
 class AbstractRun(Model):
-    class Meta:
-        abstract = True
+    objects = InheritanceManager()
 
-    endpoint = CharField(max_length=100, unique=True)
+    def __str__(self):
+        return '/api/run/{}/'.format(self.endpoint)
+
+    endpoint = CharField(max_length=100, primary_key=True)
     apikey = CharField(max_length=100, default=new_shortuuid)
     host = CharField(max_length=100)
     user = CharField(max_length=100)
