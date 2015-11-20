@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from web import tasks
+from web.bitbucket import should_run_bitbucket
 from web.models import AbstractRun, BasicRun, BitbucketRun
 
 
@@ -17,7 +18,16 @@ def run_view(request, endpoint):
     do_it, reason = should_run(request, run)
     if do_it:
         # Synchronous for now...
-        tasks.run(run.user, run.directory, run.command)
+        kwargs = {
+            'kwargs': {
+                'user': run.user,
+                'directory': run.directory,
+                'command': run.command,
+            },
+            'queue': 'runrem-{}'.format(run.host),
+        }
+        print('Running: {}'.format(kwargs))
+        tasks.run.apply_async(**kwargs)
 
         return Response({
             'did_execute': True,
@@ -38,38 +48,3 @@ def should_run(request, run):
         return should_run_bitbucket(request, run)
 
     raise Exception('Unknown run type: {}'.format(run.__class__))
-
-
-def should_run_bitbucket(request, run):
-    data = request.data
-
-    try:
-        repository = data['repository']['name']
-    except KeyError:
-        return False, 'Request did not have repository/name: {}'.format(data)
-
-    try:
-        ref_changes = data['refChanges']
-    except KeyError:
-        return False, 'Request did not have refChanges: {}'.format(data)
-
-    if run.repository != repository:
-        return False, 'Repository did not match "{}" != "{}"'.format(
-            run.repository, repository,
-        )
-
-    good = False
-    saw = []
-    for ref_change in ref_changes:
-        branch = ref_change['ref_id'].split('/')[-1]
-        saw.append(branch)
-        if branch == run.branch:
-            good = True
-
-    if not good:
-        return False, \
-            'No matching branches in refChanges. Wanted: {} Saw: {}'.format(
-                run.branch, ','.join(saw)
-            )
-    
-    return True, None
