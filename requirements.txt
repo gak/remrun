@@ -10,7 +10,7 @@ billiard==3.3.0.21        # via celery
 celery==3.1.19
 click==5.1                # via pip-tools
 decorator==4.0.4          # via ipython, traitlets
-django==1.8.6
+django==1.9rc1
 djangorestframework==3.3.1
 ecdsa==0.13               # via paramiko
 fabric==1.10.2

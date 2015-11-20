@@ -1,6 +1,6 @@
 ipython
 fabric
 pip-tools
-django
+django==1.9rc1
 djangorestframework
 celery
