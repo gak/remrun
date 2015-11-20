@@ -1,3 +1,6 @@
 ipython
 fabric
 pip-tools
+django
+djangorestframework
+celery

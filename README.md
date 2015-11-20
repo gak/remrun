@@ -30,6 +30,4 @@ Execute commands remotely via API.
 
 ## Phase 2
 
- * Move away from redis for data storage?
- * 
- 
+ * ?? 
