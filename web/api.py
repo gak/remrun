@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 
 from web import tasks
@@ -14,6 +15,9 @@ def run_view(request, endpoint):
         run = AbstractRun.objects.get_subclass(endpoint=endpoint)
     except ObjectDoesNotExist as e:
         raise Http404(e)
+
+    if request.GET.get('apikey') != run.apikey:
+        raise AuthenticationFailed('API key mismatch')
 
     do_it, reason = should_run(request, run)
     if do_it:
