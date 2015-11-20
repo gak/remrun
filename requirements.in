@@ -4,3 +4,4 @@ pip-tools
 django==1.9rc1
 djangorestframework
 celery
+shortuuid

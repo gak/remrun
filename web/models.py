@@ -1,16 +1,21 @@
-from django.db.models import Model, TextField
+import shortuuid
+from django.db.models import Model, CharField
+
+
+def new_shortuuid():
+    return shortuuid.uuid()
 
 
 class AbstractRun(Model):
     class Meta:
         abstract = True
 
-    endpoint = TextField()
-    apikey = TextField()
-    host = TextField()
-    user = TextField()
-    directory = TextField()
-    command = TextField()
+    endpoint = CharField(max_length=100, unique=True)
+    apikey = CharField(max_length=100, default=new_shortuuid)
+    host = CharField(max_length=100)
+    user = CharField(max_length=100)
+    directory = CharField(max_length=1000)
+    command = CharField(max_length=1000)
 
 
 class BasicRun(AbstractRun):
@@ -18,6 +23,5 @@ class BasicRun(AbstractRun):
 
 
 class BitbucketRun(AbstractRun):
-    repository = TextField()
-    branch = TextField()
-
+    repository = CharField(max_length=100)
+    branch = CharField(max_length=100)

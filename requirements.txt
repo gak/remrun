@@ -26,6 +26,7 @@ pip-tools==1.1.6
 ptyprocess==0.5           # via pexpect
 pycrypto==2.6.1           # via paramiko
 pytz==2015.7              # via celery
+shortuuid==0.4.2
 simplegeneric==0.8.1      # via ipython
 six==1.10.0               # via pip-tools
 traitlets==4.0.0          # via ipython
