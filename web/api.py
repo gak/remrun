@@ -7,10 +7,6 @@ from web import tasks
 from web.models import AbstractRun, BasicRun, BitbucketRun
 
 
-class ParseBitbucketRequestException(RuntimeError):
-    pass
-
-
 @api_view(['POST'])
 def run_view(request, endpoint):
     try:
@@ -49,13 +45,13 @@ def should_run_bitbucket(request, run):
 
     try:
         repository = data['repository']['name']
-    except KeyError as e:
-        return False, 'Request did not have a repository/name: {}'.format(data)
+    except KeyError:
+        return False, 'Request did not have repository/name: {}'.format(data)
 
     try:
         ref_changes = data['refChanges']
-    except KeyError as e:
-        return False, 'Request did not have a refChanges: {}'.format(data)
+    except KeyError:
+        return False, 'Request did not have refChanges: {}'.format(data)
 
     if run.repository != repository:
         return False, 'Repository did not match "{}" != "{}"'.format(
@@ -75,10 +71,5 @@ def should_run_bitbucket(request, run):
             'No matching branches in refChanges. Wanted: {} Saw: {}'.format(
                 run.branch, ','.join(saw)
             )
-
-    if run.branch != branch:
-        return False, 'Branch did not match "{}" != ""'.format(
-            run.branch, branch,
-        )
-
+    
     return True, None
