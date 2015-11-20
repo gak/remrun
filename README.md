@@ -19,8 +19,9 @@ Execute commands remotely via API.
    * Celery 
    * Redis
  * API/Configuration
-   * enpoint (e.g. /api/run/puppet-pull/)
-   * repository and branch filters (e.g. /?repo=infra.puppet&branch=master)
+   * basic endpoint (e.g. /api/run/basic/)
+   * bitbucket enpoint (e.g. /api/run/bitbucket/)
+   * bitbucket: repository and branch filters
    * apikey generated for each endpoint (e.g. /?apikey=a80f)
    * host, converting to a celery queue called "runrem-{host}"
    * user, e.g. puppet
