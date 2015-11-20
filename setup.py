@@ -1,8 +1,10 @@
 from setuptools import setup
 
+from web.version import version
+
 setup(
     name='runrem',
-    version='0.0.1',
+    version=version,
     author='Gerald Kaszuba',
     author_email='gak@gak0.com',
     license='Apache 2.0',

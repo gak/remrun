@@ -4,12 +4,14 @@ from django.core.management import call_command
 from django.core.wsgi import get_wsgi_application
 
 from web.celery import app
+from web.helpers import banner
 
 
 def runner():
+    print(banner())
     argv = [
         'worker',
-        '--loglevel=INFO',
+        '--loglevel=WARNING',
         '-c 1',
     ]
     app.worker_main(argv)
@@ -17,6 +19,6 @@ def runner():
 
 def api():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'web.settings')
-
     application = get_wsgi_application()
+    print(banner())
     call_command('runserver', '127.0.0.1:8000')
