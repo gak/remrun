@@ -5,6 +5,8 @@ django==1.9rc1
 djangorestframework
 celery
 shortuuid
+
+# Required for Django 1.9 bug fixes
 -e git+https://github.com/carljm/django-model-utils.git@8fb1e569756641fc773dcfd11b7963087ee5b685#egg=django-model-utils
 
 # Dev helpers
