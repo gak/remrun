@@ -122,6 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # Celery
 
 #CELERY_ALWAYS_EAGER = env_get_bool('CELERY_ALWAYS_EAGER')
