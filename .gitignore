@@ -1,3 +1,4 @@
 db.sqlite3
 runrem.egg-info/
 static/
+src/
