@@ -1,0 +1,10 @@
+django_base:
+  build: docker/django_base
+
+django:
+  build: docker/django
+  volumes:
+    - .:/opt/web
+  ports:
+    - '8888:80'
+
