@@ -12,17 +12,19 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from web.settings_helpers import \
+    update_environ_from_env_config_file, \
+    env_get_bool
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
+update_environ_from_env_config_file()
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')xu^=0v3i6=#m!!qhia^f&m03=&x)g-^m!xq(!l^veh_68!bw9'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env_get_bool('DEBUG', False)
 
 ALLOWED_HOSTS = [
     '*',
@@ -76,10 +78,11 @@ WSGI_APPLICATION = 'web.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', 'sqlite:///{}'.format(
+            os.path.join(BASE_DIR, 'db.sqlite3')
+        ))
+    )
 }
 
 # Password validation
@@ -126,7 +129,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Celery
 
-#CELERY_ALWAYS_EAGER = env_get_bool('CELERY_ALWAYS_EAGER')
+# CELERY_ALWAYS_EAGER = env_get_bool('CELERY_ALWAYS_EAGER')
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 
 BROKER_URL = os.environ.get('BROKER_URL', 'redis://localhost:6379/0')
