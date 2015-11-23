@@ -1,7 +1,6 @@
-# RunRem
+# RemRun
 
 ## Overview
 
-Execute commands remotely via API.
-
+Remotely Run commands via API.
 
