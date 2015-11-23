@@ -36,7 +36,7 @@ def update_django_dockerfile():
     packages = ' '.join(packages)
 
     dockerfile_content = dedent('''
-    FROM runrem_django_base
+    FROM remrun_django_base
 
     RUN pip3 install {packages}
     '''.format(**locals()))

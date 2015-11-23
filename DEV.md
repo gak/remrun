@@ -2,7 +2,7 @@
 
 ## Architecture
 
- * celery worker with unique task queue name on each host, e.g. runrem-host1
+ * celery worker with unique task queue name on each host, e.g. remrun-host1
  * rest api backend for executing commands
  * redis backend for celery
  * django orm for configuration
@@ -19,7 +19,7 @@
    * bitbucket enpoint (e.g. /api/run/bitbucket/)
    * bitbucket: repository and branch filters
    * apikey generated for each endpoint (e.g. /?apikey=a80f)
-   * host, converting to a celery queue called "runrem-{host}"
+   * host, converting to a celery queue called "remrun-{host}"
    * user, e.g. puppet
    * command, e.g. git pull
    * directory, e.g. /etc/puppet/modules/

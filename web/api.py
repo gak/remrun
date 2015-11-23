@@ -28,7 +28,7 @@ def run_view(request, endpoint):
                 'directory': run.directory,
                 'command': run.command,
             },
-            'queue': 'runrem-{}'.format(run.host),
+            'queue': 'remrun-{}'.format(run.host),
         }
         print('Running: {}'.format(kwargs))
         tasks.run.apply_async(**kwargs)
