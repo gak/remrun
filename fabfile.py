@@ -58,6 +58,8 @@ def _push(registry, name):
 def push(registry, name=None):
     if not name:
         for name in yaml.load(open('docker-compose.yml')).keys():
+            if name == 'django_base':
+                continue
             _push(registry, name)
     else:
         _push(registry, name)

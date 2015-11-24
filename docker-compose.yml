@@ -1,7 +1,7 @@
 django_base:
   build: docker/django_base
 
-django:
+api:
   build: docker/django
   volumes:
     - .:/opt/web
