@@ -2,7 +2,9 @@ import os
 import re
 from textwrap import dedent
 
+import yaml
 from fabric.decorators import task
+from fabric.operations import local
 
 
 @task
@@ -44,3 +46,18 @@ def update_django_dockerfile():
     open('docker/django/Dockerfile', 'w').write(dockerfile_content)
 
     print(dockerfile_content)
+
+
+def _push(registry, name):
+    name = 'remrun_{}'.format(name)
+    local('docker tag -f {name} {registry}/{name}'.format(**locals()))
+    local('docker push {registry}/{name}'.format(**locals()))
+
+
+@task
+def push(registry, name=None):
+    if not name:
+        for name in yaml.load(open('docker-compose.yml')).keys():
+            _push(registry, name)
+    else:
+        _push(registry, name)
