@@ -44,7 +44,13 @@ def update_django_dockerfile():
     RUN pip3 install {packages}
     '''.format(**locals()))
 
-    open('docker/django/Dockerfile', 'w').write(dockerfile_content)
+    with open('docker/django/Dockerfile', 'w') as f:
+        f.write(dockerfile_content)
+        f.write(dedent('''
+        # This file is generated via the fabric command "prepare_build" which
+        # is a dependency of "build"
+        ADD remrun.tgz /opt/web/
+        '''))
 
     print(dockerfile_content)
 
@@ -88,5 +94,13 @@ def prepare_build():
 
 @task
 def build():
+    update_django_dockerfile()
     prepare_build()
-    local('docker-compose build django_base api')
+    local('docker-compose build django_base')
+    local('docker-compose build api')
+
+
+@task
+def requirements():
+    local('pip compile')
+    local('pip sync')
