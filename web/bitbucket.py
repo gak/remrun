@@ -26,7 +26,9 @@ def should_run_bitbucket(request, run):
 def does_branch_appear(run, ref_changes):
     saw = []
     for ref_change in ref_changes:
-        branch = ref_change['ref_id'].split('/')[-1]
+        if 'refId' not in ref_change:
+            continue
+        branch = ref_change['refId'].split('/')[-1]
         saw.append(branch)
         if branch == run.branch:
             return True, None
