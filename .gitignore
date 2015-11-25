@@ -2,3 +2,6 @@ db.sqlite3
 remrun.egg-info/
 static/
 src/
+
+# This is a temporary clone during build (see fabfile.py prepare_build())
+remrun/

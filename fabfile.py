@@ -3,6 +3,7 @@ import re
 from textwrap import dedent
 
 import yaml
+from fabric.context_managers import lcd
 from fabric.decorators import task
 from fabric.operations import local
 
@@ -63,3 +64,26 @@ def push(registry, name=None):
             _push(registry, name)
     else:
         _push(registry, name)
+
+
+@task
+def prepare_build():
+    def rm_remrun_dir():
+        local('rm -r remrun')
+
+    if os.path.exists('remrun'):
+        if input('remrun dir exists. May I delete it? ')[0].lower() == 'y':
+            rm_remrun_dir()
+
+    local('git clone . remrun')
+
+    with lcd('remrun'):
+        local('tar --exclude-vcs-ignores czf docker/django/remrun.tgz .')
+
+    rm_remrun_dir()
+
+
+@task
+def build():
+    prepare_build()
+    local('docker-compose build django_base django')
