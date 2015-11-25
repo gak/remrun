@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import os
 
+import dj_database_url
+
 from web.settings_helpers import \
     update_environ_from_env_config_file, \
     env_get_bool
