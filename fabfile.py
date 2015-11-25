@@ -78,7 +78,10 @@ def prepare_build():
     local('git clone . remrun')
 
     with lcd('remrun'):
-        local('tar cz --exclude-vcs-ignores -f ../docker/django/remrun.tgz .')
+        local(
+            'tar cz --exclude-vcs-ignores --exclude .git '
+            '-f ../docker/django/remrun.tgz .'
+        )
 
     rm_remrun_dir()
 
