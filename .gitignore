@@ -2,6 +2,7 @@ db.sqlite3
 remrun.egg-info/
 static/
 src/
+docker/django/remrun.tgz
 
 # This is a temporary clone during build (see fabfile.py prepare_build())
 remrun/

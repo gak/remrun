@@ -69,7 +69,7 @@ def push(registry, name=None):
 @task
 def prepare_build():
     def rm_remrun_dir():
-        local('rm -r remrun')
+        local('rm -fr remrun')
 
     if os.path.exists('remrun'):
         if input('remrun dir exists. May I delete it? ')[0].lower() == 'y':
@@ -78,7 +78,7 @@ def prepare_build():
     local('git clone . remrun')
 
     with lcd('remrun'):
-        local('tar --exclude-vcs-ignores czf docker/django/remrun.tgz .')
+        local('tar cz --exclude-vcs-ignores -f ../docker/django/remrun.tgz .')
 
     rm_remrun_dir()
 
@@ -86,4 +86,4 @@ def prepare_build():
 @task
 def build():
     prepare_build()
-    local('docker-compose build django_base django')
+    local('docker-compose build django_base api')
