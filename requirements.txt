@@ -10,7 +10,7 @@ amqp==1.4.7               # via kombu
 anyjson==0.3.3            # via kombu
 billiard==3.3.0.21        # via celery
 celery==3.1.19
-click==5.1                # via pip-tools
+click==6.0                # via pip-tools
 decorator==4.0.4          # via ipython, traitlets
 dj-database-url==0.3.0
 django==1.9rc1
@@ -31,6 +31,7 @@ path.py==8.1.2            # via pickleshare
 pexpect==4.0.1            # via ipython
 pickleshare==0.5          # via ipython
 pip-tools==1.1.6
+psycopg2==2.6.1
 ptyprocess==0.5           # via pexpect
 pycrypto==2.6.1           # via paramiko
 pygments==2.0.2           # via httpie
